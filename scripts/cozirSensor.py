@@ -24,7 +24,7 @@ def talker(input_args):
     if len(input_args) > 2:
         filter_param = int(input_args[2])
     else:
-        filter_param = 16 
+        filter_param = 16
 
     displayMode = "M {}\r\n".format(mask)
     filterParamRead = "a\r\n"
@@ -42,6 +42,11 @@ def talker(input_args):
     #ser.write(operMode.encode("utf-8"))
     #res=ser.read(10)
     #print(res)
+
+    ser.write(".\r\n".encode("utf-8"))
+    res=ser.read(10)
+    multiplier=int(res[3:8])
+    #print(multiplier)
 
     if mask == 2:
        filter_param=None
@@ -76,7 +81,7 @@ def talker(input_args):
         #print(resp)
 
         resp = resp[:8]
-        conc = int(resp[2:])
+        conc = int(resp[2:])*multiplier
         pub.publish(concentration=conc,stamp=rospy.get_rostime(),frame_id=frame_prefix+'/cozir')
         rate.sleep()
 
