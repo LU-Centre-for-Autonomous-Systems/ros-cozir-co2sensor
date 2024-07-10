@@ -9,12 +9,12 @@ This repository is a ROS1 package containing Python scripts to interface with th
 This setup documentation is focused on the COZIR-A sensors. Based on the available sensor datasheet, the COZIR-A sensor should be connected to the Raspberry pi using GPIO pins. As shown in the following figures, the sensor pins 1 (`GND`),  3 (`VDD`),  5 (`Rx_In`) and 7 (`Tx_Out`) should be connected to pins 6 (`GND`), 1 (`3v3`), 8 (`GPIO TXD`) and 10 (`GPIO RXD`) of the Raspberry Pi, respectively. 
 
 | ![COZIR-A Cased](cozirA_c.png) |
-| :------------------------------------------------------------------: |
-|                         Cozir Sensor Closed                          |
+| :----------------------------: |
+| Cozir Sensor Closed            |
 
 | ![COZIR-A UnCased](cozirA_uc.png) |
-| :------------------------------------------------------------------: |
-|                         Cozir Sensor Uncased                         |
+| :-------------------------------: |
+|   Cozir Sensor Uncased            |
 
 | ![Raspberry Pi pinout](GPIO-Pinout-Diagram-2.png) |
 | :-----------------------------------------------: |
