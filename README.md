@@ -1,3 +1,4 @@
+
 # ROS1 package for COZIR CO2 sensors  
   
 ![COZIR CO2 sensor](MFG_COZIR-AH-1.jpg)  
@@ -50,3 +51,45 @@ Alternatively, in order to add a rosnode to an existing launch file the followin
 ```
 
 The `<add-output-type> = filtered or unfiltered` input specifying the whether published measurements on the ROS network are filtered or unfiltered. Moreover, the `<add-filter-parameter>` (chosen from 1 to 32 ) quantifies the sensitivity of the sensor output to sudden concentration changes. A lower the parameter value would result in a more sensitive sensor output. In case no input is provided, the output type is set to filtered with a default parameter value of 16.
+
+# Enabling Serial ports for interfacing
+
+To enable serial port interfacing with the sensor with a Debian OS, follow the following
+```
+sudo raspi-config
+```
+Select the serial interface options from the menu, followed by answering NO to enabling login shell and yes to serial hardware port. Finally, reboot the system.
+
+----------
+
+For Ubuntu 20.04 server installations, follow these steps as directed on a [StackExchange](https://askubuntu.com/a/1338744)  query
+1. Back up the original `config.txt` and `cmdline.txt` files
+```
+sudo cp -pr /boot/firmware/cmdline.txt /boot/firmware/cmdline.txt-orig
+sudo cp -pr /boot/firmware/config.txt /boot/firmware/config.txt-orig
+```
+2. Edit `/boot/firmware/config.txt` to comment out the `enable_uart=1` like below,
+
+```
+#enable_uart=1
+    
+cmdline=cmdline.txt
+```
+
+3. Remove the console setting `console=serial0,115200` from `/boot/firmware/cmdline.txt`
+
+4. Disable the Serial Service which used the UART
+```
+sudo systemctl stop serial-getty@ttyS0.service
+sudo systemctl disable serial-getty@ttyS0.service
+sudo systemctl mask serial-getty@ttyS0.service
+```
+
+5. Add the user which will use the UART to `tty` and `dialout` group
+
+```
+sudo adduser ${USER} tty
+sudo adduser ${USER} dialout
+```
+
+6. Finally, reboot Ubuntu 20.04, `/dev/ttyS0` should be available to interface with the sensor.
