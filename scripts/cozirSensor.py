@@ -100,8 +100,8 @@ def talker(input_args):
         #print(type(humidity))
         co2 = int(resp[20:25])*multiplier # co2 concentration in PPM
 
-        print("T: {} C, RH: {} %, CO2: {} PPM".format(temperature, humidity, co2))
-        pub.publish(T=round(temperature,1),RH=round(humidity,1),CO2=co2,stamp=rospy.get_rostime(),frame_id=frame_prefix+'cozir') #publishing the data
+        #print("T: {} C, RH: {} %, CO2: {} PPM".format(temperature, humidity, co2))
+        pub.publish(T=temperature,RH=humidity,CO2=co2,stamp=rospy.get_rostime(),frame_id=frame_prefix+'cozir') #publishing the data
         #pub.publish(CO2=co2,stamp=rospy.get_rostime(),frame_id=frame_prefix+'cozir') #publishing the data
         rate.sleep()
 
