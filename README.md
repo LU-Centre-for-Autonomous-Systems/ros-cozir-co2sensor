@@ -43,7 +43,7 @@ Once the sensor is configured to not stream data, it will not interfere with boo
 To install the `cozir` ROS-1 package, clone the GitHub repository using the following command in the `src` folder for your catkin workspace
 
 ```
-git clone https://github.com/LU-Centre-for-Autonomous-Systems/cozir.git
+git clone https://github.com/LU-Centre-for-Autonomous-Systems/ros-cozir-co2sensor.git
 ```
 
 Build your catkin workspace by running  `catkin_make` in your catkin workspace. This will build the sensor package and allowing the ROS commands to execute the launch scripts.
