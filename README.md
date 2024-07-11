@@ -2,7 +2,7 @@
   
 ![COZIR CO2 sensor](MFG_COZIR-AH-1.jpg)  
   
-This repository is a ROS1 package containing Python scripts to interface with the COZIR-A CO2 sensors using a raspberry pi board. The repository contains two key files, namely `cozirCalibrate.py` and `cozirSensor.py`. The calibration script is designed to calibrate the sensors using fresh air while the sensor is placed in an unobstructed environment. The Sensor script is designed to publish a stamped concentration measurement reading of the CO2 concentration in PPM.  
+This repository is a ROS1 package containing Python scripts to interface with the COZIR-AH temperature, humidity, CO2 sensors using a raspberry pi board. The repository contains two key files, namely `cozirCalibrate.py` and `cozirSensor.py`. The calibration script is designed to calibrate the CO2 sensor using fresh air while the sensor is placed in an unobstructed environment. The Sensor script is designed to publish a stamped temperature, humidity and CO2 concentration readings in degree celcius, \% and PPM, respectively.  
   
 # Setting up the COZIR-A sensor  
   
