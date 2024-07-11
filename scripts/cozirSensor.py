@@ -5,7 +5,7 @@ import time
 import rospy
 import os
 from std_msgs.msg import Int64
-from cozir.msg import cozirStamped
+from cozir_ros.msg import cozirStamped
 
 
 def talker(input_args):
