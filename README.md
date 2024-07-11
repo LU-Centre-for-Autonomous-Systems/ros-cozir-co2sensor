@@ -32,6 +32,7 @@ Open another terminal with a Python environment and run the following commands t
 ```
 import serial
 ser = serial.Serial("<insert-the-USB-port-associated-with-sensor>")
+ser.flushInput()
 ser.write("K 2\r\n".encode("utf-8"))
 resp=ser.read(10)
 print("Operation Mode: {}".format(int(resp[3:8])))
