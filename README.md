@@ -1,13 +1,12 @@
-
-# ROS1 package for COZIR CO2 sensors  
+# ROS1 package for COZIR-A CO2 sensors  
   
 ![COZIR CO2 sensor](MFG_COZIR-AH-1.jpg)  
   
-This repository is a ROS1 package containing Python scripts to interface with the COZIR CO2 sensors using a raspberry pi board. The repository contains two key files, namely `cozirCalibrate.py` and `cozirSensor.py`. The calibration script is designed to calibrate the sensors using fresh air while the sensor is placed in an unobstructed environment. The Sensor script is designed to publish a stamped concentration measurement reading of the CO2 concentration in PPM.  
+This repository is a ROS1 package containing Python scripts to interface with the COZIR-A CO2 sensors using a raspberry pi board. The repository contains two key files, namely `cozirCalibrate.py` and `cozirSensor.py`. The calibration script is designed to calibrate the sensors using fresh air while the sensor is placed in an unobstructed environment. The Sensor script is designed to publish a stamped concentration measurement reading of the CO2 concentration in PPM.  
   
-# Setting up the COZIR sensor  
+# Setting up the COZIR-A sensor  
   
-This setup documentation is focused on the COZIR-A sensors. Based on the available sensor datasheet, the COZIR-A sensor should be connected to the Raspberry pi using GPIO pins. As shown in the following figures, the sensor pins 1 (`GND`),  3 (`VDD`),  5 (`Rx_In`) and 7 (`Tx_Out`) should be connected to pins 6 (`GND`), 1 (`3v3`), 8 (`GPIO TXD`) and 10 (`GPIO RXD`) of the Raspberry Pi, respectively. 
+This setup documentation is focused on the COZIR-A sensors. Based on the available sensor datasheet, the COZIR-A sensor should be connected to the Raspberry pi using GPIO pins. As shown in the following figures, the sensor pins 1 (`GND`),  3 (`VDD`),  5 (`Rx_In`) and 7 (`Tx_Out`) should be connected to pins 6 or 14 (`GND`), 1 (`3v3`), 8 (`GPIO TXD`) and 10 (`GPIO RXD`) of the Raspberry Pi, respectively. 
 
 | ![COZIR-A Cased](cozirA_c.PNG) |
 | :----------------------------: |
@@ -21,6 +20,25 @@ This setup documentation is focused on the COZIR-A sensors. Based on the availab
 | :-----------------------------------------------: |
 |                     Raspberry Pi GPIO pinout      |
 
+-----------------
+
+The COZIR-A sensors are equipped with multiple modes of operation, where the default being the ___streaming mode___(mode 1). This may cause some boot issue on Raspberry Pi if the sensor is directly connected through the GPIO pins, especially with Ubuntu 20.04 and above OS. Therefore, it is advised to "configure" the sensors to operate in ___polling mode___(mode 2) before setting them up with a Pi. In order to configure a COZIR-A sensor, you would need a UART-2-USB adapter, breadboard jumper cables and a laptop/desktop. Connect the UART-USB adapter to the CO2 sensor while ensuring its pin 1, 3, 5, and 7 are connected to `GND`, `3V3` power,`TXD` and `RXD` of the UART-USB adapter. Open Ubuntu terminal on the laptop and type 
+```
+ls /dev
+``` 
+to obtain the list of serial associated with current devices. Now plug the USB end of the UART-USB adapter setup with the sensor into the laptop. Repeat the command `ls /dev` to obtain the port name corresponding to sensor.  
+
+Open another terminal with a Python environment and run the following commands to set the sensor configuration to ___polling mode___ (mode 2)
+```
+import serial
+ser = serial.Serial("<insert-the-USB-port-associated-with-sensor>")
+ser.write("K 2\r\n".encode("utf-8"))
+resp=ser.read(10)
+print("Operation Mode: {}".format(int(resp[3:8])))
+```
+
+Once the sensor is configured to not stream data, it will not interfere with boot procedure of the Pi.
+
 # ROS1 package Installation
 To install the `cozir` ROS-1 package, clone the GitHub repository using the following command in the `src` folder for your catkin workspace
 
@@ -32,7 +50,7 @@ Build your catkin workspace by running  `catkin_make` in your catkin workspace. 
 
 # Calibration
 
-In order to run the calibration script, first place the senor setup in fresh air for 15 minutes and allow time for the sensor temperature to stabilize, and for the fresh air to be fully diffused into the sensor. Power up the sensor, and run the calibration Python script using the following command
+In order to run the calibration script, first place the senor setup in fresh air for 15 minutes and allow time for the sensor temperature to stabilize, and for the fresh air to be fully diffused into the sensor. Power up the Pi-sensor setup, and run the calibration Python script using the following command
 
 ```
 rosrun cozir cozirCalibration.py
