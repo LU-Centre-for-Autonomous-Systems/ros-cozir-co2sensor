@@ -55,6 +55,7 @@ In order to run the calibration script, first place the senor setup in fresh air
 ```
 rosrun cozir cozirCalibration.py
 ```
+The calibratin scripts reference fresh air CO2 concnetrations to 400 PPM as a reference value. In future, additional scripts will be added to allow user specific concentration based calibration of the sensor.
 
 # ROS implementation instructions
 
