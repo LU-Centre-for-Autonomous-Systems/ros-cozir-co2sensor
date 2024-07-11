@@ -1,4 +1,4 @@
-# ROS package for COZIR-A CO2 sensors  
+# ROS package for COZIR-AH Temprature, Humidity and CO2 sensors  
   
 ![COZIR CO2 sensor](MFG_COZIR-AH-1.jpg)  
   
