@@ -78,7 +78,7 @@ def talker(input_args):
 # initialising a ros-publisher to output data onto the network
     pub = rospy.Publisher('concentration', cozirStamped, queue_size=10)
 
-    rate=rospy.Rate(1) # setting the publishing rate for the ros node
+    rate=rospy.Rate(0.5) # setting the publishing rate for the ros node
     readMode = "Q\r\n" # read mode set for the polling mode communication with the sensor
 
     ser.flushInput() # flushing all unwanted response on the serial port before publishing output
